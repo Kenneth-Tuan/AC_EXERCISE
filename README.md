@@ -1,2 +1,2 @@
-# literate-octo-spoon
+# AC_EXERCISE
 alphaCamp Only
