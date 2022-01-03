@@ -13,6 +13,11 @@ const GAME_STATE = {
   GameFinished: "GameFinished",
 }
 
+const player = {
+  name: "",
+  triedTimes: 0
+}
+
 const view = {
     //displayCards - 負責選出 #cards 並抽換內容
     displayCards (indexes) {
@@ -96,8 +101,8 @@ const view = {
         <p>Score: ${model.score}</p>
         <p>You've tried: ${model.triedTimes} times</p>
         <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-outline-info me-3">Save</button>
-          <button type="button" class="btn btn-outline-primary">New Game</button>
+          <button type="button" class="btn btn-outline-info me-3" data-bs-toggle="modal" data-bs-target="#modal">Save</button>
+          <button type="button" class="btn btn-outline-primary newGame">New Game</button>
         </div>
       `
       const header = document.querySelector('#header')
@@ -114,6 +119,16 @@ const utility = {
         ;[number[index], number[randomIndex]] = [number[randomIndex], number[index]]
     }
     return number
+  },
+
+  addToPlayersList (name) {
+    const list = JSON.parse(localStorage.getItem('players')) || []  
+    player.name = name
+    // if (list.some((player) => player.name === name)) {}   如果排行榜内已有相同名稱的情況該如何處理
+    player.triedTimes = model.triedTimes
+    list.push(player)
+    console.log(list)
+    localStorage.setItem('players', JSON.stringify(list))
   }
 }
 
@@ -158,6 +173,14 @@ const controller = {
             console.log('GameFinished')
             this.currentState = GAME_STATE.GameFinished
             view.showGameFinished()
+            document.querySelectorAll('.btn').forEach(btn => {
+              btn.addEventListener('click', event => {
+                target = event.target
+                if(target.matches('.newGame')) {
+                  controller.newGame()
+                }
+              })
+            })
             return
           }
           this.currentState = GAME_STATE.FirstCardAwaits
@@ -174,6 +197,11 @@ const controller = {
     view.flipCards(...model.revealedCards)
     model.revealedCards = []
     controller.currentState = GAME_STATE.FirstCardAwaits
+  }, 
+
+  newGame () {
+    location.reload()
+    console.log('11111')
   }
 }
 
@@ -184,4 +212,9 @@ document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', event => {
     controller.dispatchCardAction(card)
   })
+})
+
+document.querySelector('#name-form').addEventListener('submit', event => {
+  event.preventDefault()
+  utility.addToPlayersList(document.querySelector('#name-input').value.trim())
 })
