@@ -1,0 +1,13 @@
+.container {
+    display: grid;
+    height: 1600px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fit, minmax(260px, 1fr));
+    grid-gap: 16px;
+}
+.card {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    overflow: hidden;
+}
