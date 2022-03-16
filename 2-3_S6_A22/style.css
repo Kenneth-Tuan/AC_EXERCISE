@@ -1,0 +1,43 @@
+a {
+    -webkit-tap-highlight-color:transparent;
+    text-decoration: none;
+}
+a:link { 
+    font-size: 12px; 
+    color: #000000; 
+    text-decoration: none; 
+} 
+a:visited { 
+    font-size: 12px; 
+    color: #000000; 
+    text-decoration: none; 
+} 
+a:hover { 
+    font-size: 12px; 
+    color: #999999; 
+    text-decoration: none; 
+}
+a:active {
+    color: red;
+    text-decoration: dotted;
+}
+.btn {
+    margin: 5px;
+    width: 100px;
+    text-align: center;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+.active {
+    background-color: gray;
+}
+.hello {
+    display: flex;
+    flex-flow: row nowrap;
+}
+a:nth-child(1) {
+    flex: 1;
+}
